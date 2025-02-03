@@ -343,15 +343,6 @@ jobs:
           name: surrealdb
           path: build/libs
 
-      - name: Publish Jar (Maven)
-        run: ./gradlew publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USER }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_PASS }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_KEY_PASS: ${{ secrets.SIGNING_KEY_PASS }}
-
       - name: Publish release package
         uses: softprops/action-gh-release@v2
         if: github.event_name == 'release' && github.event.action == 'created'
