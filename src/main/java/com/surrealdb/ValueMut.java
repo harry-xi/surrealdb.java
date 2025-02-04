@@ -33,6 +33,10 @@ public class ValueMut extends Native {
 
     private static native long newObject(long[] ptrs);
 
+    private static native long newNull();
+
+    private static native long newNone();
+
     public static ValueMut createString(String s) {
         return new ValueMut(newString(s));
     }
@@ -93,6 +97,14 @@ public class ValueMut extends Native {
         // The Entries have been moved
         entries.forEach(Native::moved);
         return value;
+    }
+
+    public static ValueMut createNull() {
+        return new ValueMut(newNull());
+    }
+
+    public static ValueMut createNone() {
+        return new ValueMut(newNone());
     }
 
     @Override
