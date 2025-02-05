@@ -9,8 +9,10 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TypeTests {
 
@@ -53,6 +55,21 @@ public class TypeTests {
             final Dates created = surreal.create(Dates.class, "date", d).get(0);
             // We check that the records are matching
             assertEquals(created, d);
+        }
+    }
+
+    @Test
+    void nullAndNone() {
+        try (final Surreal surreal = new Surreal()) {
+            surreal.connect("memory").useNs("test_ns").useDb("test_db");
+            final HashMap<String,ValueMut> map = new HashMap<>();
+            final ValueMut none = ValueMut.createNone();
+            map.put("none", none);
+            final ValueMut nullValue = ValueMut.createNull();
+            map.put("null", nullValue);
+            final Response res =  surreal.queryWithValue("return $none;return $null",map);
+            assertTrue(res.take(0).isNone());
+            assertTrue(res.take(1).isNull());
         }
     }
 

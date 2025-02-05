@@ -33,43 +33,47 @@ public class ValueMut extends Native {
 
     private static native long newObject(long[] ptrs);
 
-    static ValueMut createString(String s) {
+    private static native long newNull();
+
+    private static native long newNone();
+
+    public static ValueMut createString(String s) {
         return new ValueMut(newString(s));
     }
 
-    static ValueMut createBoolean(boolean b) {
+    public static ValueMut createBoolean(boolean b) {
         return new ValueMut(newBoolean(b));
     }
 
-    static ValueMut createDouble(double d) {
+    public static ValueMut createDouble(double d) {
         return new ValueMut(newDouble(d));
     }
 
-    static ValueMut createLong(long l) {
+    public static ValueMut createLong(long l) {
         return new ValueMut(newLong(l));
     }
 
-    static ValueMut createBigDecimal(BigDecimal d) {
+    public static ValueMut createBigDecimal(BigDecimal d) {
         return new ValueMut(newDecimal(d.toString()));
     }
 
-    static ValueMut createDuration(Duration d) {
+    public static ValueMut createDuration(Duration d) {
         return new ValueMut(newDuration(d.toMillis()));
     }
 
-    static ValueMut createDatetime(ZonedDateTime d) {
+    public static ValueMut createDatetime(ZonedDateTime d) {
         return new ValueMut(newDatetime(d.toEpochSecond(), d.getNano()));
     }
 
-    static ValueMut createId(Id id) {
+    public static ValueMut createId(Id id) {
         return new ValueMut(newId(id.getPtr()));
     }
 
-    static ValueMut createThing(RecordId recordId) {
+    public static ValueMut createThing(RecordId recordId) {
         return new ValueMut(newThing(recordId.getPtr()));
     }
 
-    static ValueMut createArray(List<ValueMut> values) {
+    public static ValueMut createArray(List<ValueMut> values) {
         final long[] ptrs = new long[values.size()];
         int idx = 0;
         // Retrieve the PTR for each element
@@ -82,7 +86,7 @@ public class ValueMut extends Native {
         return value;
     }
 
-    static ValueMut createObject(List<EntryMut> entries) {
+    public static ValueMut createObject(List<EntryMut> entries) {
         final long[] ptrs = new long[entries.size()];
         int idx = 0;
         // Retrieve the PTR for each element
@@ -93,6 +97,14 @@ public class ValueMut extends Native {
         // The Entries have been moved
         entries.forEach(Native::moved);
         return value;
+    }
+
+    public static ValueMut createNull() {
+        return new ValueMut(newNull());
+    }
+
+    public static ValueMut createNone() {
+        return new ValueMut(newNone());
     }
 
     @Override
