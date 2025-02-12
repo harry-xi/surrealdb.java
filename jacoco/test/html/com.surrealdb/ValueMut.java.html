@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public class ValueMut extends Native {
+class ValueMut extends Native {
 
     private ValueMut(long ptr) {
 <span class="fc" id="L11">        super(ptr);</span>
@@ -33,43 +33,43 @@ public class ValueMut extends Native {
 
     private static native long newObject(long[] ptrs);
 
-    public static ValueMut createString(String s) {
+    static ValueMut createString(String s) {
 <span class="fc" id="L37">        return new ValueMut(newString(s));</span>
     }
 
-    public static ValueMut createBoolean(boolean b) {
+    static ValueMut createBoolean(boolean b) {
 <span class="fc" id="L41">        return new ValueMut(newBoolean(b));</span>
     }
 
-    public static ValueMut createDouble(double d) {
+    static ValueMut createDouble(double d) {
 <span class="fc" id="L45">        return new ValueMut(newDouble(d));</span>
     }
 
-    public static ValueMut createLong(long l) {
+    static ValueMut createLong(long l) {
 <span class="fc" id="L49">        return new ValueMut(newLong(l));</span>
     }
 
-    public static ValueMut createBigDecimal(BigDecimal d) {
+    static ValueMut createBigDecimal(BigDecimal d) {
 <span class="fc" id="L53">        return new ValueMut(newDecimal(d.toString()));</span>
     }
 
-    public static ValueMut createDuration(Duration d) {
+    static ValueMut createDuration(Duration d) {
 <span class="fc" id="L57">        return new ValueMut(newDuration(d.toMillis()));</span>
     }
 
-    public static ValueMut createDatetime(ZonedDateTime d) {
+    static ValueMut createDatetime(ZonedDateTime d) {
 <span class="fc" id="L61">        return new ValueMut(newDatetime(d.toEpochSecond(), d.getNano()));</span>
     }
 
-    public static ValueMut createId(Id id) {
+    static ValueMut createId(Id id) {
 <span class="fc" id="L65">        return new ValueMut(newId(id.getPtr()));</span>
     }
 
-    public static ValueMut createThing(RecordId recordId) {
+    static ValueMut createThing(RecordId recordId) {
 <span class="fc" id="L69">        return new ValueMut(newThing(recordId.getPtr()));</span>
     }
 
-    public static ValueMut createArray(List&lt;ValueMut&gt; values) {
+    static ValueMut createArray(List&lt;ValueMut&gt; values) {
 <span class="fc" id="L73">        final long[] ptrs = new long[values.size()];</span>
 <span class="fc" id="L74">        int idx = 0;</span>
         // Retrieve the PTR for each element
@@ -82,7 +82,7 @@ public class ValueMut extends Native {
 <span class="fc" id="L82">        return value;</span>
     }
 
-    public static ValueMut createObject(List&lt;EntryMut&gt; entries) {
+    static ValueMut createObject(List&lt;EntryMut&gt; entries) {
 <span class="fc" id="L86">        final long[] ptrs = new long[entries.size()];</span>
 <span class="fc" id="L87">        int idx = 0;</span>
         // Retrieve the PTR for each element
